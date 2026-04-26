@@ -1,44 +1,40 @@
-export default function Nav({ page, setPage, vendorId, isLocked }) {
+export default function Nav({ page, setPage, vendorId }) {
+  const ticker = "TOKEN GENERATED ◆ HMAC VERIFIED ◆ AUDIT LOGGED ◆ SCORE 0.08 ◆ VENDOR_001 NORMAL ◆ VENDOR_004 WATCHLIST ◆ AI MONITORING ACTIVE ◆ SYSTEM SECURE ◆ CRYPTOGRAPHIC INTEGRITY VERIFIED ◆ ";
   return (
-    <nav className="ts-nav">
-      <div className="ts-nav-logo">
-        <div className="ts-nav-dot" />
-        TokenSentinel
-      </div>
-      <div className="ts-nav-right">
-        {vendorId && (
-          <span style={{ fontSize: 11, color: 'var(--teal-mid)', fontFamily: 'var(--font-mono)' }}>
-            {vendorId}
-          </span>
-        )}
-        {vendorId && (
-          <>
-            <button
-              className={`ts-nav-link ${page === 'portal' ? 'active' : ''}`}
-              onClick={() => setPage('portal')}
-            >Vendor portal</button>
-            <button
-              className={`ts-nav-link ${page === 'siem' ? 'active' : ''}`}
-              onClick={() => setPage('siem')}
-            >SIEM dashboard</button>
-            <button
-              className={`ts-nav-link ${page === 'audit' ? 'active' : ''}`}
-              onClick={() => setPage('audit')}
-            >Audit trail</button>
-          </>
-        )}
-        <div className="ts-live">
-          <div className="ts-live-pulse" />
-          Live
+    <>
+      <nav className="nav">
+        <div className="nav-logo">
+          <div className="nav-logo-mark"><div className="nav-logo-mark-inner"/></div>
+          Token<span>Sentinel</span>
         </div>
         {vendorId && (
-          <button
-            className="ts-nav-link"
-            onClick={() => setPage('login')}
-            style={{ color: 'var(--text-faint)' }}
-          >Sign out</button>
+          <div className="nav-tabs">
+            {[['portal','Vendor Portal'],['siem','SIEM Dashboard'],['audit','Audit Trail']].map(([id,label])=>(
+              <button key={id} className={`nav-tab ${page===id?'active':''}`} onClick={()=>setPage(id)}>
+                {label}
+              </button>
+            ))}
+          </div>
         )}
+        <div className="nav-right">
+          {vendorId && <span className="nav-vendor">{vendorId}</span>}
+          <div className="nav-live"><div className="nav-live-dot"/>LIVE</div>
+          {vendorId && <button className="nav-exit" onClick={()=>setPage('login')}>SIGN OUT</button>}
+        </div>
+      </nav>
+      <div className="ticker-bar">
+        <div className="ticker-inner">
+          {[ticker,ticker].map((t,i)=>(
+            <span key={i}>
+              {t.split('◆').map((item,j,arr)=>(
+                <span key={j} className="ticker-item">
+                  {item.trim()}{j<arr.length-2&&<span className="ticker-sep"> ◆ </span>}
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
       </div>
-    </nav>
+    </>
   );
 }

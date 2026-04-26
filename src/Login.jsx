@@ -1,62 +1,40 @@
 import { useState } from 'react';
-
 export default function Login({ onLogin }) {
-  const [vid, setVid]  = useState('VENDOR_007');
+  const [vid,  setVid]  = useState('VENDOR_007');
   const [pass, setPass] = useState('');
-  const [err, setErr]   = useState('');
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (!vid.trim()) { setErr('Please enter your vendor ID.'); return; }
-    onLogin(vid.trim());
-  }
-
+  function submit(e) { e.preventDefault(); if (vid.trim()) onLogin(vid.trim()); }
   return (
-    <div className="login-screen">
-      <div className="login-card">
-        <div className="login-logo">
-          <div className="login-icon">
-            <div className="login-icon-sq" />
-          </div>
-          <div className="login-title">Vendor sign in</div>
-          <div className="login-sub">TokenSentinel vending platform</div>
+    <div className="login-wrap">
+      <div className="login-box">
+        <div className="login-mark">
+          <div className="login-mark-sq"><div className="login-mark-sq-in"/></div>
+          <div className="login-brand">Token<span>Sentinel</span></div>
         </div>
-
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">Vendor ID</label>
-            <input
-              className="form-input mono"
-              value={vid}
-              onChange={e => setVid(e.target.value)}
-              placeholder="VENDOR_007"
-              autoFocus
-            />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Password</label>
-            <input
-              className="form-input"
-              type="password"
-              value={pass}
-              onChange={e => setPass(e.target.value)}
-              placeholder="••••••••"
-            />
-          </div>
-          <div className="form-group">
-            <label className="form-label">Device fingerprint</label>
-            <input
-              className="form-input mono readonly"
-              value="device-known-001 (auto-detected)"
-              readOnly
-            />
-          </div>
-          {err && (
-            <p style={{ fontSize: 11, color: 'var(--red)', marginBottom: 10 }}>{err}</p>
-          )}
-          <button type="submit" className="btn btn-primary">Sign in</button>
-        </form>
-        <p className="login-footer">Session is monitored for security</p>
+        <div className="login-card">
+          <div className="login-card-title">Vendor authentication</div>
+          <div className="login-card-sub">Session monitored · AI scoring active · HMAC enforced</div>
+          <form onSubmit={submit}>
+            <div className="fgrp">
+              <label className="flbl">Vendor ID</label>
+              <input className="finp" value={vid} onChange={e=>setVid(e.target.value)} placeholder="VENDOR_007" autoFocus/>
+            </div>
+            <div className="fgrp">
+              <label className="flbl">Password</label>
+              <input className="finp" type="password" value={pass} onChange={e=>setPass(e.target.value)} placeholder="••••••••"/>
+            </div>
+            <div className="fgrp">
+              <label className="flbl">Device fingerprint</label>
+              <input className="finp ro" value="device-known-001 · auto-detected" readOnly/>
+            </div>
+            <div style={{marginTop:8}}>
+              <button type="submit" className="btn btn-primary">Authenticate →</button>
+            </div>
+          </form>
+        </div>
+        <div className="login-footer">
+          All sessions are cryptographically logged<br/>
+          Unauthorised access will trigger immediate lockout
+        </div>
       </div>
     </div>
   );
